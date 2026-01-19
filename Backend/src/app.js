@@ -1,0 +1,21 @@
+import express from "express"
+import dotenv from "dotenv"
+import cors from "cors"
+import connectDB from "./config/db.js"
+
+dotenv.config();
+const app = express()
+
+app.use(cors())
+app.use(express.json())
+const PORT = process.env.PORT
+
+app.get("/", (req,res)=>{
+    res.send("Project Management System Api running")
+})
+
+app.listen(PORT, (req,res)=>{
+    console.log(`Server is working at PORT https://localhost:${PORT}`)
+})
+
+connectDB()
