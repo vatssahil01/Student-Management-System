@@ -15,7 +15,7 @@ app.get("/", (req,res)=>{
 })
 
 app.listen(PORT, (req,res)=>{
-    console.log(`Server is working at PORT https://localhost:${PORT}`)
+    console.log(`Server is working at PORT http://localhost:${PORT}`)
 })
 
 connectDB()

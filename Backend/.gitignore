@@ -84,7 +84,7 @@ temp/
 /coverage
 
 # ================================
-# Build tools
+# Build tools.
 # ================================
 .parcel-cache/
 .next/
