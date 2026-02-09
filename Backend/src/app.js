@@ -18,7 +18,7 @@ app.get("/", (req,res)=>{
 
 app.use("/api/auth",authRoutes)
 
-app.use("api/projects", projectRoutes)
+app.use("/api/projects", projectRoutes)
 
 app.listen(PORT, (req,res)=>{
     console.log(`Server is working at PORT http://localhost:${PORT}`)
