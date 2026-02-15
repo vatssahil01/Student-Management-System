@@ -45,4 +45,24 @@ export const updateProjectStatus = async (req, res) => {
     }
 }
 
-// changes
+// Get projects (Role-based)
+export const getProjects = async (req,res)=>{
+    try{
+        let projects;
+
+        if (req.user.role === "admin") {
+            projects = await Project.find()
+                .populate("student", "name email")
+                .populate("teacher", "name email");
+        } else if (req.user.role === "student") {
+            projects = await Project.find({ student: req.user._id })
+                .populate("teacher", "name email" )
+        } else if (req.user.role === "teacher") {
+            projects = await Project.find({ teacher: req.user._id })
+                .populate("student", "name email");
+        }
+        res.json(projects);
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
