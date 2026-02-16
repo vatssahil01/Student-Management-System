@@ -1,5 +1,5 @@
 import express from "express"
-import { createProject, updateProjectStatus } from "./project.controller.js"
+import { createProject, updateProjectStatus, getProjects } from "./project.controller.js"
 import { authorizeRoles, protect } from "../../middleware/auth.middleware.js"
 
 const router = express.Router()
@@ -21,5 +21,7 @@ router.put(
   updateProjectStatus
 );
 
+// Get projects (role based)
+router.get("/", protect, getProjects);
 
 export default router
