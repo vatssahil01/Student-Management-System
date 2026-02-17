@@ -66,3 +66,35 @@ export const getProjects = async (req,res)=>{
         res.status(500).json({ message: error.message })
     }
 }
+
+// Admin : assign teacher to project
+
+export const assignTeacher = async (req,res)=>{
+    try{
+        const{ teacherId } = req.body;
+
+        const project =  await Project.findById(req.parmas.id);
+
+        if (!project) {
+            return res.status(404).json({ message: "Project not found"});
+        }
+
+        if (project.status !== "approved") {
+            return res.status(400).json({
+                message: "Only approved project can be assigned"
+            })
+        }
+
+        project.teacher = teacherId;
+        await project.save();
+
+        res.json({
+            message: "Teacher assigned successfully",
+            project
+        })
+
+    }
+    catch(error) {
+        res.status(500).json({message: error.message})
+    }
+}
