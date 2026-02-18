@@ -1,5 +1,5 @@
 import express from "express"
-import { createProject, updateProjectStatus, getProjects } from "./project.controller.js"
+import { createProject, updateProjectStatus, getProjects , assignTeacher } from "./project.controller.js"
 import { authorizeRoles, protect } from "../../middleware/auth.middleware.js"
 
 const router = express.Router()
@@ -13,7 +13,6 @@ router.post(
 )
 
 // Admin approves or rejects project
-// Admin approves or rejects project
 router.put(
   "/:id/status",
   protect,
@@ -23,5 +22,12 @@ router.put(
 
 // Get projects (role based)
 router.get("/", protect, getProjects);
+
+router.put(
+  "/:id/assign-teacher",
+  protect,
+  authorizeRoles('admin'),
+  assignTeacher
+);
 
 export default router

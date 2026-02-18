@@ -98,3 +98,5 @@ export const assignTeacher = async (req,res)=>{
         res.status(500).json({message: error.message})
     }
 }
+
+// Teacher : update project progress
