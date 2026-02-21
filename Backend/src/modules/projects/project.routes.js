@@ -1,5 +1,5 @@
 import express from "express"
-import { createProject, updateProjectStatus, getProjects , assignTeacher } from "./project.controller.js"
+import { createProject, updateProjectStatus, getProjects , assignTeacher, updateProjectProgress } from "./project.controller.js"
 import { authorizeRoles, protect } from "../../middleware/auth.middleware.js"
 
 const router = express.Router()
@@ -29,6 +29,15 @@ router.put(
   authorizeRoles('admin'),
   assignTeacher
 );
+
+
+// Get  updateProjectProgress
+router.put(
+  "/:id/progress",
+  protect,
+  authorizeRoles("teacher"),
+  updateProjectProgress
+)
 
 
 export default router

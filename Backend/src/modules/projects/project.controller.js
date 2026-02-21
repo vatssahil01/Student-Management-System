@@ -100,3 +100,31 @@ export const assignTeacher = async (req,res)=>{
 }
 
 // Teacher : update project progress
+export const updateProjectProgress = async (req, res) => {
+    try {
+        const { progress , remarks , projectStatus } = req.body;
+
+        const project = await Project.findById(req.parmas.id);
+
+        if (!project) {
+            return res.status(404).json({ message: "Project not found"});
+        }
+        // Ensure only assigned teacher can update
+        if (!project.teacher || project.teacher.toString() !== req.user._id.toString()) {
+            return res.status(403).json({ message: "Not authorized to update this project"})
+        }
+
+        if (progress !== undefined) project.progress = progress;
+        if (remarks !== undefined) project.remarks = remarks;
+        if (projectStatus !== undefined) project.projectStatus = projectStatus;
+
+        await project.save();
+
+        res.json({
+            message: "Project updated successfully",
+            project
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message})
+    }
+}
